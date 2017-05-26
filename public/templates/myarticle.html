@@ -1,0 +1,77 @@
+<div class="my-article">
+	<a ng-if="user && user == article.username" class="btn" ng-click="modify(article._id)">
+	    <i class="fa fa-pencil-square-o"></i>
+	</a>
+	<a ng-if="user && user == article.username" class="btn delete-a" ng-click="delete(article._id)">
+	    <i class="fa fa-trash-o"></i>
+	</a>
+	<div class="container">
+		<div class="article">
+			<div class="author-info">
+	            <a class="avatar" href="/users/d257c563cfd5">
+	              <img src="../img/avatar-default.png">
+				</a>            
+				<span class="label">作者</span>
+	            <a class="author-name blue-link" href="/home/mypage/{{article.uid}}">
+	              <span>{{article.nickname}}</span>
+				</a>              
+				<span>{{articleTime}}</span>
+	        </div>
+	        <h1 class="title">{{article.title}}</h1>
+	        <div class="meta-top">
+	            <span class="views-count">阅读{{article.pv}}</span>
+	            <span class="comments-count">评论{{article.comment.length}}</span>
+	        </div>
+	        <div class="show-content" id="showContent">
+	        	<!-- {{article.content}} -->
+	        </div>
+	        <div class="comment-head">
+	        	<span>{{article.comment.length}}条评论</span>
+         		 <a class="goto-comment pull-right"><i class="fa fa-pencil"></i>添加新评论</a>
+	        </div>
+	        <div class="comment-list">
+	        	<div class="note-comment" ng-repeat="item in article.comment track by item.cid">
+	        		<div class="content">
+					    <div class="meta-top">
+					      <a href="/home/mypage/{{item.cuser.id}}">
+					        <div class="avatar"><img src="../img/avatar-default.png"></div>
+						  </a>      
+						  <a class="author-name" href="/home/mypage/{{item.cuser.id}}">{{item.cuser.nickname}}</a>
+					      <span class="reply-time"><a>{{item.time}}</a></span>
+					    </div>
+					    <p>{{item.message}}</p>
+					    <div class="comment-footer clearfix">  
+					    	<a ng-if="user && user == article.username" class="delete pull-right" ng-click="deleteComment(item.cid)"><i class="fa fa-times"></i>删除 </a>   
+					    	<a class="reply pull-right" ng-click="reply(item.cid, $event)"><i class="fa fa-reply"></i>回复 </a>  
+					    </div>
+					    <div class="reply-input">
+					    	<textarea placeholder="回复内容" ng-keyup="myKeyup($event)"></textarea>
+					    </div>
+					    <div class="replay-list">
+					    	<div class="note-reply" ng-repeat="ritem in item.reply">
+					    		<div class="content">
+								    <div class="meta-top">
+								      <a href="/home/mypage/{{ritem.user.id}}">
+								        <div class="avatar"><img src="../img/avatar-default.png"></div>
+									  </a>      
+									  <a class="author-name" href="/home/mypage/{{ritem.user.id}}">{{ritem.user.nickname}}</a>
+								      <span class="reply-time"><a>{{ritem.time}}</a></span>
+								    </div>
+								    <p>{{ritem.message}}</p>
+								    <div class="comment-footer clearfix">  
+								    	<a ng-if="user && user == article.username" class="delete pull-right" ng-click="deleteReply(item.cid,ritem.rid)"><i class="fa fa-times"></i>删除 </a>   
+								    	<a class="reply pull-right" ng-click="reply(item.cid, $event)"><i class="fa fa-reply"></i>回复 </a>  
+								    </div>
+								    <div class="reply-input">
+								    	<textarea placeholder="回复内容" ng-keyup="myKeyup($event)"></textarea>
+								    </div>
+								</div>
+					    	</div>
+					    </div>
+					</div>
+	        	</div>
+	        </div>
+	        <comment message="message" publish="publish()"></comment>
+		</div>
+	</div>
+</div>
